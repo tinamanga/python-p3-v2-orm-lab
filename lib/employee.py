@@ -1,4 +1,4 @@
-# lib/employee.py
+
 from __init__ import CURSOR, CONN
 from department import Department
 
@@ -179,12 +179,14 @@ class Employee:
         sql = """
             SELECT *
             FROM employees
-            WHERE name is ?
+            WHERE name = ?
         """
-
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        from lib.review import Review  # Absolute import avoids issues
+        sql = "SELECT * FROM reviews WHERE employee_id = ?"
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Review.instance_from_db(row) for row in rows]

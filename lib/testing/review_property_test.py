@@ -57,4 +57,4 @@ class TestReviewProperties:
             employee = Employee.create("Lee", "Manager", department.id)
             review = Review.create(
                 2023, "Excellent work ethic! Outstanding programming skills!", employee.id)
-            review.employee_id = 100  # id not in employees table
+            review.employee = 100  # id not in employees table
